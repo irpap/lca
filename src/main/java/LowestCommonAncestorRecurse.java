@@ -1,11 +1,10 @@
 public class LowestCommonAncestorRecurse {
     Node lowestCommonAnestor(Node tree, int val1, int val2) {
         if (!containsBoth(tree, val1, val2)) return null;
-        //If a node contains both values, but none of its children contain both values, then that's the lca.
-        if (!containsBoth(tree.left, val1, val2) && !containsBoth(tree.right, val1, val2)) return tree;
-
         Node lcaLeft = lowestCommonAnestor(tree.left, val1, val2);
         Node lcaRight = lowestCommonAnestor(tree.right, val1, val2);
+        //If a node contains both values, but none of its children contain both values, then that's the lca.
+        if (lcaLeft == null && lcaRight == null) return tree;
         return lcaLeft != null ? lcaLeft : lcaRight;
     }
 
