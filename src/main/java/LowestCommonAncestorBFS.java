@@ -1,20 +1,24 @@
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 public class LowestCommonAncestorBFS {
 
-    Integer lowestCommonAnestor(Node tree, int val1, int val2) {
+    Integer lowestCommonAnestor (Node tree, int val1, int val2) {
         LinkedList<Integer> path1 = pathFromRoot(tree, val1);
         LinkedList<Integer> path2 = pathFromRoot(tree, val2);
 
-        for (int i = 0; i < path1.size() - 1 && i < path2.size() - 1; i++) {
-            if (path1.get(i + 1) != path2.get(i + 1)) return path1.get(i);
-        }
-        return null;
+        return endOfCommonPrefix(path1, path2);
     }
 
-    LinkedList<Integer> pathFromRoot(Node tree, int val) {
+    private Integer endOfCommonPrefix (final LinkedList<Integer> path1, final LinkedList<Integer> path2) {
+        Integer lca = null;
+        for (int i = 0; i < path1.size() && i < path2.size(); i++) {
+            if (path1.get(i) == path2.get(i)) { lca = path1.get(i); }
+        }
+        return lca;
+    }
+
+    LinkedList<Integer> pathFromRoot (Node tree, int val) {
         HashMap<Integer, Integer> parents = new HashMap<Integer, Integer>();
         LinkedList<Node> queue = new LinkedList<Node>();
 
@@ -23,7 +27,7 @@ public class LowestCommonAncestorBFS {
 
         while (!queue.isEmpty()) {
             Node head = queue.poll();
-            if (head.val == val) break;
+            if (head.val == val) { break; }
             if (head.right != null) {
                 queue.add(head.right);
                 parents.put(head.right.val, head.val);
@@ -35,7 +39,7 @@ public class LowestCommonAncestorBFS {
         }
 
         LinkedList<Integer> path = new LinkedList<Integer>();
-        if (!parents.containsKey(val)) return path;
+        if (!parents.containsKey(val)) { return path; }
         path.addFirst(val);
         while (parents.get(val) != null) {
             path.addFirst(parents.get(val));
@@ -43,5 +47,4 @@ public class LowestCommonAncestorBFS {
         }
         return path;
     }
-
 }
