@@ -13,11 +13,9 @@ public class LowestCommonAncestorDFS {
     }
 
     private static Node endOfCommonPrefix (final List<Node> path1, final List<Node> path2) {
-        Node lca = null;
-        for (int i = 0; i < path1.size() && i < path2.size(); i++) {
-            if (path1.get(i) == path2.get(i)) { lca = path1.get(i); }
-        }
-        return lca;
+        int i = 0;
+        for (; i < Math.min(path1.size(), path2.size()) && path1.get(i) == path2.get(i); i++) { ; }
+        return (i == 0) ? null : path1.get(i - 1);
     }
 
     static List<Node> pathFromRoot (Node tree, int val, List<Node> path) {

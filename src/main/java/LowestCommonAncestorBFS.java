@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public class LowestCommonAncestorBFS {
 
@@ -10,12 +11,10 @@ public class LowestCommonAncestorBFS {
         return endOfCommonPrefix(path1, path2);
     }
 
-    private Integer endOfCommonPrefix (final LinkedList<Integer> path1, final LinkedList<Integer> path2) {
-        Integer lca = null;
-        for (int i = 0; i < path1.size() && i < path2.size(); i++) {
-            if (path1.get(i) == path2.get(i)) { lca = path1.get(i); }
-        }
-        return lca;
+    private Integer endOfCommonPrefix (final List<Integer> path1, final List<Integer> path2) {
+        int i = 0;
+        for (; i < Math.min(path1.size(), path2.size()) && path1.get(i) == path2.get(i); i++) { ; }
+        return (i == 0) ? null : path1.get(i - 1);
     }
 
     LinkedList<Integer> pathFromRoot (Node tree, int val) {
